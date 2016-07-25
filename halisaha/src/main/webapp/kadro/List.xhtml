@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h:form id="kadroForm">
+            
+
+            <p:panel header="#{bundle.ListMacKadrosuTitle}" id="kadroPanel" rendered="#{not empty macController.selected}">
+
+                <p:autoComplete id="addOyuncu" value="#{macController.selectedOyuncu}" completeMethod="#{macController.completeList}" converter="oyuncuConverter">
+                    <p:ajax event="itemSelect" listener="#{macController.onOyuncuSelect}" update=":growl,datalist,addOyuncu,:olayForm" />
+                </p:autoComplete>
+                <p:watermark value="Oyuncu adını girin..." id="watermark" for="addOyuncu"/>
+
+                <p:dataTable id="datalist" value="#{macController.oyuncular}" var="kadro" style="padding-top: 5px;"
+                             rowIndexVar="rowIndex"
+                             rowKey="#{kadro.id}" emptyMessage="Kadroda hiç oyuncu yok.">
+
+                    <p:column width="24" style="padding: 4px;">                    
+                        <p:outputPanel style="background:url(#{resource['images:player2.png']}) no-repeat; width: 27px; height: 24px;text-align:end">#{rowIndex+1}</p:outputPanel>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{kadro.oyuncu.ad}"/>
+                    </p:column>
+
+                    <p:column width="8%" styleClass="actionsColumn" >
+                        <p:commandLink title="Kaldır" onclick="PF('confirmDelete').show()" >
+
+                            <p:graphicImage library="images" name="delete.png" style="height: 16px;"/>
+                            <f:setPropertyActionListener target="#{macController.selectedMacOyuncusu}" value="#{kadro}" />
+                        </p:commandLink>
+                    </p:column>                    
+                </p:dataTable>
+            </p:panel>
+
+
+
+            <p:confirmDialog id="confirmDeleteD" widgetVar="confirmDelete" header="Silme Onayı" message="Oyuncu maç kadrosundan çıkarılsın mı?" severity="alert" closeOnEscape="true">
+                <p:commandButton value="Bekle" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('confirmDelete').hide()" />
+                <p:commandButton value="Çıkar" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('confirmDelete').hide()" update=":mainTab:kadroForm:datalist :growl :olayForm"
+                                 actionListener="#{macController.kadrodanOyuncuCikar}" />
+            </p:confirmDialog>
+        </h:form>
+
+
+    </ui:composition>
+
+</html>

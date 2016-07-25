@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+            
+        <p:dialog id="OyuncuEditDlg" widgetVar="OyuncuEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditOyuncuTitle}">
+            <h:form id="OyuncuEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{oyuncuController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditOyuncuLabel_ad}" for="ad" />
+                        <p:inputText id="ad" value="#{oyuncuController.selected.ad}" title="#{bundle.EditOyuncuTitle_ad}" required="true" requiredMessage="#{bundle.EditOyuncuRequiredMessage_ad}"/>
+                        <p:outputLabel value="#{bundle.EditOyuncuLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{oyuncuController.selected.email}" title="#{bundle.EditOyuncuTitle_email}" />
+                        <p:outputLabel value="#{bundle.EditOyuncuLabel_dahiliNo}" for="dahiliNo" />
+                        <p:inputText id="dahiliNo" value="#{oyuncuController.selected.dahiliNo}" title="#{bundle.EditOyuncuTitle_dahiliNo}" />
+                        <p:outputLabel value="#{bundle.EditOyuncuLabel_cepNo}" for="cepNo" />
+                        <p:inputText id="cepNo" value="#{oyuncuController.selected.cepNo}" title="#{bundle.EditOyuncuTitle_cepNo}" />
+                        <p:outputLabel value="Aktif mi?" for="aktif" />
+                        <p:selectBooleanCheckbox id="aktif" value="#{oyuncuController.selected.aktif}" />                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{oyuncuController.update}" value="#{bundle.Save}" update="display,:mainTab:OyuncuListForm:datalist,:growl" oncomplete="handleSubmit(args, 'OyuncuEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="OyuncuEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

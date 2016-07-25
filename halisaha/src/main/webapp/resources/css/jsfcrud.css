@@ -1,0 +1,53 @@
+.right{
+    text-align: right;
+}
+.left{
+    text-align: left;
+}
+.ui-confirmdialog-yes{
+    background-color: lightcoral !important;
+}
+.ui-carousel-header-title{
+    position: relative !important;
+    top: -5px !important;
+}
+.ui-carousel-header{
+    border: 0px !important;
+}
+.ui-carousel{
+    padding: 0px !important;
+}
+.action-button{
+    padding-right: 2px;
+}
+body{
+    overflow: hidden;
+}
+.ui-dialog-buttonpane{
+    text-align: right !important;
+}
+.ui-widget {
+    font-size: 12px !important;
+}
+.ui-widget-header {
+    text-align: left !important;
+    margin: 0px !important;
+}
+.ui-datatable-footer .ui-button {
+    float: left;
+    margin-top: 25px !important;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 0px 3px 0px 3px !important;
+}
+.ui-button {
+    margin-top: 10px !important;
+}
+
+.sahaItem {
+    width: 666px;
+    height: 456px;
+    text-align: center;
+    table-layout: fixed;
+}

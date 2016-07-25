@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:composition>
+        <h:form id="SahaListForm">
+            <p:carousel id="datalist" value="#{sahaController.items}" var="item" style="width: 100% !important;" itemStyleClass="sahaItem" numVisible="1" circular="true">
+
+                <f:facet name="header">
+                    <p:commandLink id="createButton" styleClass="action-button" actionListener="#{sahaController.prepareCreate}" update=":mainTab:SahaCreateForm" oncomplete="PF('SahaCreateDialog').show()">
+                        <p:graphicImage library="images" name="add.png" style="height: 24px;"/>
+                    </p:commandLink>
+                       
+                </f:facet>
+                <h:panelGrid columns="1" style="width:100%; table-layout: fixed;">
+                    <p:outputPanel style="display: block; background:url(#{resource['images:chalk.png']}) no-repeat;  background-size: 100% 100%; padding-top: -1px;">
+                        <h:panelGrid columns="1" style="padding: 15px; width:100%; table-layout: fixed;color: whitesmoke; font-style: italic;">
+                            <h:outputText value="#{item.ad}" style="font-weight: bold;"/>
+                            <h:outputText value="#{item.aciklama}" rendered="#{not empty item.aciklama}"/>
+                            <h:outputText value="#{bundle.ListSahaTitle_adres}: #{item.adres}" />
+
+                            <h:outputText value="#{bundle.ListSahaTitle_tel}: #{item.tel}"/>
+                            <h:outputText value="#{bundle.ListSahaTitle_maxKisi}: #{item.maxKisi}"/>
+                        </h:panelGrid>
+                    </p:outputPanel>
+
+                    <p:outputPanel rendered="#{not empty item.koordinat}">
+                        <p:gmap center="#{item.koordinat}" zoom="17" type="HYBRID" style="height:325px" model="#{sahaController.fetchMapModel(item)}"/>
+                        <h:outputLink value="http://maps.google.com/maps?saddr=40.789222,29.446707&amp;daddr=#{item.koordinat}" style="color: blue">Yol Tarifi Al</h:outputLink>
+                    </p:outputPanel>
+
+
+                </h:panelGrid>
+                <f:facet name="footer">
+                    Toplam saha sayısı: #{fn:length(sahaController.items)}
+                </f:facet>
+            </p:carousel>
+
+        </h:form>
+
+        <ui:include src="Create.xhtml"/>
+        <ui:include src="Edit.xhtml"/>
+
+    </ui:composition>
+
+</html>

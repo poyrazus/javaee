@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="template.xhtml">
+        <ui:define name="body">
+
+
+        </ui:define>
+        <ui:define name="footer">
+            <h:form id="olayForm"> 
+                <p:fieldset legend="Olaylar" toggleable="true" toggleSpeed="500" collapsed="#{sessionController.olaylarCollapsed}">
+                    <p:ajax event="toggle" listener="#{sessionController.olaylarFieldsetToggled}" />
+                    <p:dataTable value="#{olayController.events}" var="event" paginator="true" paginatorPosition="top" rows="5" >
+
+                        <p:column width="4%" style="padding: 0px">
+                            <p:graphicImage library="images" name="player2.png" style="height:24px;"/> 
+                        </p:column>
+                        <p:column width="20%">
+                            <f:facet name="header">
+                                Tarih
+                            </f:facet>
+                            <h:outputText value="#{event.eklenmeZamani}" style="font-weight: bold;">
+                                <f:convertDateTime pattern="dd.MM.YYYY HH:mm:ss" timeZone="Europe/Istanbul" locale="tr"/>
+                            </h:outputText>
+                        </p:column>               
+                        <p:column width="20%">
+                            <f:facet name="header">
+                                İşlemi Yapan
+                            </f:facet>
+                            <h:outputText value="#{event.user}" style="font-weight: bold;" />
+                        </p:column>                        
+                        <p:column>
+                            <f:facet name="header">
+                                İşlem Detayı
+                            </f:facet>
+                            <h:outputText value="#{event.mesaj}" style="font-weight: bold"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

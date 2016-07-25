@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MacEditDlg" widgetVar="MacEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMacTitle}">
+            <h:form id="MacEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{macController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMacLabel_tarih}" for="tarih" />
+                        <p:calendar id="tarih" pattern="MM/dd/yyyy" value="#{macController.selected.tarih}" title="#{bundle.EditMacTitle_tarih}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditMacLabel_saat}" for="saat" />
+                        <p:inputText id="saat" value="#{macController.selected.saat}" title="#{bundle.EditMacTitle_saat}" />
+                        <p:outputLabel value="#{bundle.EditMacLabel_asilKadroSayisi}" for="asilKadroSayisi" />
+                        <p:inputText id="asilKadroSayisi" value="#{macController.selected.asilKadroSayisi}" title="#{bundle.EditMacTitle_asilKadroSayisi}" />
+                        <p:outputLabel value="#{bundle.EditMacLabel_sahaId}" for="sahaId" />
+                        <p:selectOneMenu id="sahaId" value="#{macController.selected.saha}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{sahaController.itemsAvailableSelectOne}"
+                                           var="sahaIdItem"
+                                           itemValue="#{sahaIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{macController.update}" value="#{bundle.Save}" update="display,:mainTab:MacListForm:datalist,:growl,:olayForm" oncomplete="handleSubmit(args, 'MacEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MacEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

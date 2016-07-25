@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SahaCreateDlg" widgetVar="SahaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSahaTitle}">
+            <h:form id="SahaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sahaController.selected != null}">
+
+                        <p:outputLabel value="#{bundle.CreateSahaLabel_ad}" for="ad" />
+                        <p:inputText id="ad" value="#{sahaController.selected.ad}" title="#{bundle.CreateSahaTitle_ad}" required="true" requiredMessage="#{bundle.CreateSahaRequiredMessage_ad}"/>
+
+                        <p:outputLabel value="#{bundle.CreateSahaLabel_adres}" for="adres" />
+                        <p:inputTextarea id="adres" value="#{sahaController.selected.adres}" title="#{bundle.CreateSahaTitle_adres}"  autoResize="false"/>
+                        <p:outputLabel value="#{bundle.CreateSahaLabel_tel}" for="tel" />
+                        <p:inputMask id="tel" value="#{sahaController.selected.tel}" title="#{bundle.CreateSahaTitle_tel}" mask="0(999) 999-99-99"/>
+                        <p:outputLabel value="#{bundle.CreateSahaLabel_maxKisi}" for="maxKisi" />
+                        <p:selectOneRadio id="maxKisi" value="#{sahaController.selected.maxKisi}">
+                            <f:selectItem itemLabel="10" itemValue="10" />
+                            <f:selectItem itemLabel="12" itemValue="12" />
+                            <f:selectItem itemLabel="14" itemValue="14" />
+                            <f:selectItem itemLabel="16" itemValue="16" />
+                            <f:selectItem itemLabel="Bilinmiyor" itemValue="0" />
+                        </p:selectOneRadio>                    
+
+                        <p:outputLabel value="#{bundle.CreateSahaLabel_koordinat}" for="koordinat" />
+                        <p:inputText id="koordinat" value="#{sahaController.selected.koordinat}" title="#{bundle.CreateSahaTitle_koordinat}" />
+                        <p:outputLabel value="#{bundle.CreateSahaLabel_aciklama}" for="aciklama" />
+                        <p:inputTextarea id="aciklama" value="#{sahaController.selected.aciklama}" title="#{bundle.CreateSahaTitle_aciklama}" autoResize="false"/>                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sahaController.create}" value="#{bundle.Save}" update="display,:mainTab:SahaListForm:datalist,:growl" oncomplete="handleSubmit(args,'SahaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SahaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
